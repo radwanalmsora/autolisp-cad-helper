@@ -1,0 +1,86 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "AutoLISP",
+  "scopeName": "source.autolisp",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#constants" },
+    { "include": "#defun-definition" },
+    { "include": "#control-keywords" },
+    { "include": "#autocad-builtins" },
+    { "include": "#vl-functions" },
+    { "include": "#lisp-core-functions" },
+    { "include": "#numbers" },
+    { "include": "#quoted-symbols" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.autolisp",
+          "begin": ";\\|",
+          "end": "\\|;"
+        },
+        {
+          "name": "comment.line.semicolon.autolisp",
+          "match": ";.*$"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.autolisp",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.autolisp",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.nil.autolisp",
+          "match": "(?i)\\b(nil|T)\\b"
+        },
+        {
+          "name": "constant.language.pi.autolisp",
+          "match": "(?i)\\b(pi)\\b"
+        }
+      ]
+    },
+    "defun-definition": {
+      "match": "(?i)\\(\\s*(defun(?:-q)?)\\s+([a-zA-Z0-9:_\\-\\+\\*]+)",
+      "captures": {
+        "1": { "name": "keyword.declaration.defun.autolisp" },
+        "2": { "name": "entity.name.function.autolisp" }
+      }
+    },
+    "control-keywords": {
+      "match": "(?i)\\b(if|cond|repeat|while|foreach|progn|lambda|defun|defun-q)\\b",
+      "name": "keyword.control.autolisp"
+    },
+    "autocad-builtins": {
+      "match": "(?i)\\b(command|vl-cmdf|getpoint|getcorner|getdist|getangle|getorient|getstring|getint|getreal|getkword|initget|entsel|nentsel|nentselp|ssget|sslength|ssname|ssnamex|ssadd|ssdel|ssmemb|entget|entmod|entupd|entmake|entmakex|entdel|entnext|redraw|grread|grdraw|grvecs|vports|trans|osnap|setvar|getvar|getenv|setenv|findfile|alert|prompt|princ|prin1|print|read-line|write-line|open|close|load|arxload|autoarxload)\\b",
+      "name": "support.function.autocad.autolisp"
+    },
+    "vl-functions": {
+      "match": "(?i)\\b(vlax-[a-zA-Z0-9\\-]+|vlr-[a-zA-Z0-9\\-]+|vla-[a-zA-Z0-9\\-]+|vl-[a-zA-Z0-9\\-]+)\\b",
+      "name": "support.function.vlisp.autolisp"
+    },
+    "lisp-core-functions": {
+      "match": "(?i)\\b(setq|set|car|cdr|caar|cadr|cdar|cddr|caaar|caadr|cadar|caddr|cdaar|cdadr|cddar|cdddr|cons|list|append|assoc|member|nth|subst|reverse|length|last|apply|mapcar|eval|read|type|quote|equal|eq|null|zerop|numberp|minusp|abs|sin|cos|atan|sqrt|expt|exp|log|max|min|rem|1\\+|1\\-|itoa|atoi|rtos|atof|angtos|angtof|strcat|substr|strlen|strcase|ascii|chr|acad_colordlg|acad_strlsort)\\b",
+      "name": "support.function.core.autolisp"
+    },
+    "numbers": {
+      "match": "\\b[-+]?\\d+(\\.\\d+)?([eE][-+]?\\d+)?\\b",
+      "name": "constant.numeric.autolisp"
+    },
+    "quoted-symbols": {
+      "match": "'[a-zA-Z0-9_\\-\\+\\*]+",
+      "name": "variable.other.symbol.autolisp"
+    }
+  }
+}
