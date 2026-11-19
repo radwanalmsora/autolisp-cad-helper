@@ -1,0 +1,130 @@
+{
+  "name": "autolisp-cad-helper",
+  "displayName": "AutoLISP & CAD Pro Assistant",
+  "description": "Comprehensive AutoLISP language support, syntax highlighting, smart snippets, live bracket audit, and CAD development tools.",
+  "version": "1.0.0",
+  "publisher": "radwanalmsora",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "autolisp",
+    "lisp",
+    "autocad",
+    "cad",
+    "lsp",
+    "dcl",
+    "drafting"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:autolisp",
+    "onCommand:autolisp.checkSyntax",
+    "onCommand:autolisp.listFunctions",
+    "onCommand:autolisp.insertErrorHandler",
+    "onCommand:autolisp.insertHeader"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "autolisp",
+        "aliases": [
+          "AutoLISP",
+          "autolisp",
+          "lsp"
+        ],
+        "extensions": [
+          ".lsp",
+          ".mnl",
+          ".fas",
+          ".vlx"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "dcl",
+        "aliases": [
+          "AutoCAD DCL",
+          "dcl"
+        ],
+        "extensions": [
+          ".dcl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "autolisp",
+        "scopeName": "source.autolisp",
+        "path": "./syntaxes/autolisp.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "autolisp",
+        "path": "./snippets/autolisp.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "autolisp.checkSyntax",
+        "title": "Audit Parentheses & Syntax Balance",
+        "category": "AutoLISP",
+        "icon": "$(bracket-dot)"
+      },
+      {
+        "command": "autolisp.listFunctions",
+        "title": "List All Defined Functions & Commands",
+        "category": "AutoLISP",
+        "icon": "$(symbol-function)"
+      },
+      {
+        "command": "autolisp.insertErrorHandler",
+        "title": "Insert Production Error Handler (*error*)",
+        "category": "AutoLISP",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "autolisp.insertHeader",
+        "title": "Insert Professional File Header",
+        "category": "AutoLISP",
+        "icon": "$(file-code)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "autolisp.checkSyntax",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "when": "editorLangId == autolisp"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "autolisp.checkSyntax",
+          "when": "editorLangId == autolisp",
+          "group": "1_autolisp"
+        },
+        {
+          "command": "autolisp.listFunctions",
+          "when": "editorLangId == autolisp",
+          "group": "1_autolisp"
+        }
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/radwanalmsora/autolisp-cad-helper"
+  },
+  "license": "MIT"
+}
