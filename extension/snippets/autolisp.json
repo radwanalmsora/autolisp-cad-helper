@@ -1,0 +1,90 @@
+{
+  "AutoCAD Command Definition": {
+    "prefix": "defunc",
+    "body": [
+      "(defun c:${1:MYCOMMAND} ( / ${2:old_echo old_osm} )",
+      "  (vl-load-com)",
+      "  (setq old_echo (getvar \"CMDECHO\"))",
+      "  (setvar \"CMDECHO\" 0)",
+      "  ",
+      "  (vla-startundomark (vla-get-activedocument (vlax-get-acad-object)))",
+      "  ",
+      "  (princ \"\\nRunning ${1:MYCOMMAND}...\")",
+      "  $0",
+      "  ",
+      "  (vla-endundomark (vla-get-activedocument (vlax-get-acad-object)))",
+      "  (setvar \"CMDECHO\" old_echo)",
+      "  (princ)",
+      ")"
+    ],
+    "description": "Create an AutoCAD custom command with undo and cmdecho protection"
+  },
+  "Subroutine Definition": {
+    "prefix": "defun",
+    "body": [
+      "(defun ${1:my-function} ( ${2:arg1 arg2} / ${3:local_var} )",
+      "  \"${4:Function documentation}\"",
+      "  $0",
+      ")"
+    ],
+    "description": "Define a helper subroutine in AutoLISP"
+  },
+  "Production Error Handler": {
+    "prefix": "errorhandler",
+    "body": [
+      "(defun *error* (msg)",
+      "  (if (and msg (not (wcmatch (strcase msg t) \"*break*,*cancel*,*exit*\")))",
+      "    (princ (strcat \"\\n[AutoLISP Error]: \" msg))",
+      "  )",
+      "  (if old_echo (setvar \"CMDECHO\" old_echo))",
+      "  (if old_osm  (setvar \"OSMODE\"  old_osm))",
+      "  (if (and vla-doc (= 1 (vla-get-activeundogroup vla-doc)))",
+      "    (vla-endundomark vla-doc)",
+      "  )",
+      "  (setq *error* nil)",
+      "  (princ)",
+      ")"
+    ],
+    "description": "Safe *error* handler restoring sysvars and undo mark"
+  },
+  "Selection Set Loop": {
+    "prefix": "ssloop",
+    "body": [
+      "(if (setq ${1:ss} (ssget '${2:((0 . \"LINE,LWPOLYLINE\"))}))",
+      "  (repeat (setq ${3:i} (sslength ${1:ss}))",
+      "    (setq ${4:ent} (ssname ${1:ss} (setq ${3:i} (1- ${3:i}))))",
+      "    (setq ${5:dxf} (entget ${4:ent}))",
+      "    $0",
+      "  )",
+      ")"
+    ],
+    "description": "Iterate through entities in an AutoCAD selection set"
+  },
+  "Cond Statement": {
+    "prefix": "cond",
+    "body": [
+      "(cond",
+      "  ((${1:condition1})",
+      "    ${2:action1}",
+      "  )",
+      "  ((${3:condition2})",
+      "    ${4:action2}",
+      "  )",
+      "  (t",
+      "    ${5:default_action}",
+      "  )",
+      ")"
+    ],
+    "description": "Multi-way conditional branch"
+  },
+  "Safe System Variable Set": {
+    "prefix": "sysvar",
+    "body": [
+      "(setq ${1:old_var} (getvar \"${2:OSMODE}\"))",
+      "(setvar \"${2:OSMODE}\" ${3:0})",
+      "$0",
+      "(setvar \"${2:OSMODE}\" ${1:old_var})"
+    ],
+    "description": "Safely alter and restore AutoCAD system variable"
+  }
+}
